@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -15,38 +16,34 @@ namespace Membership1
         {
 
         }
-        protected void RegisterUser_CreatedUser(object sender, EventArgs e)
-        {
-            FormsAuthentication.SetAuthCookie(RegisterUser.UserName, false /* createPersistentCookie */);
+        /*        protected void RegisterUser_CreatedUser(object sender, EventArgs e)
+                {
+                    FormsAuthentication.SetAuthCookie(RegisterUser.UserName, false *//* createPersistentCookie *//*);
 
-            string continueUrl = RegisterUser.ContinueDestinationPageUrl;
-            if (String.IsNullOrEmpty(continueUrl))
+                    string continueUrl = RegisterUser.ContinueDestinationPageUrl;
+                    if (String.IsNullOrEmpty(continueUrl))
+                    {
+                        continueUrl = "Login.aspx";
+                    }
+                    Response.Redirect(continueUrl);
+                }*/
+        protected void CreateUser_Click(object sender, EventArgs e)
+        {
+            // Default UserStore constructor uses the default connection string named: DefaultConnection
+            var userStore = new UserStore<IdentityUser>();
+            var manager = new UserManager<IdentityUser>(userStore);
+
+            var user = new IdentityUser() { UserName = UserName.Text };
+            IdentityResult result = manager.Create(user, Password.Text);
+
+            if (result.Succeeded)
             {
-                continueUrl = "Login.aspx";
+                StatusMessage.Text = string.Format("User {0} was created successfully!", user.UserName);
             }
-            Response.Redirect(continueUrl);
+            else
+            {
+                StatusMessage.Text = result.Errors.FirstOrDefault();
+            }
         }
-
-
-/*        public Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }*/
     }
 }

@@ -6,37 +6,38 @@
 <head runat="server">
     <title></title>
 </head>
-<body>
+<body style="font-family: Arial, Helvetica, sans-serif; font-size: small">
     <form id="form1" runat="server">
-        <asp:CreateUserWizard ID="RegisterUser" runat="server"
-            OnCreatedUser="RegisterUser_CreatedUser" BackColor="#E3EAEB"
-            BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="0.8em">
-            <ContinueButtonStyle BackColor="White" BorderColor="#C5BBAF"
-                BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana"
-                ForeColor="#1C5E55" />
-            <CreateUserButtonStyle BackColor="White" BorderColor="#C5BBAF"
-                BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana"
-                ForeColor="#1C5E55" />
-            <TitleTextStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-            <WizardSteps>
-                <asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server">
-                </asp:CreateUserWizardStep>
-                <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
-                </asp:CompleteWizardStep>
-            </WizardSteps>
-            <HeaderStyle BackColor="#666666" BorderColor="#E6E2D8" BorderStyle="Solid"
-                BorderWidth="2px" Font-Bold="True" Font-Size="0.9em" ForeColor="White"
-                HorizontalAlign="Center" />
-            <NavigationButtonStyle BackColor="White" BorderColor="#C5BBAF"
-                BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana"
-                ForeColor="#1C5E55" />
-            <SideBarButtonStyle ForeColor="White" />
-            <SideBarStyle BackColor="#1C5E55" Font-Size="0.9em" VerticalAlign="Top" />
-            <StepStyle BorderWidth="0px" />
-        </asp:CreateUserWizard>
-        <div>
+    <div>
+        <h4 style="font-size: medium">Register a new user</h4>
+        <hr />
+        <p>
+            <asp:Literal runat="server" ID="StatusMessage" />
+        </p>                
+        <div style="margin-bottom:10px">
+            <asp:Label runat="server" AssociatedControlID="UserName">User name</asp:Label>
+            <div>
+                <asp:TextBox runat="server" ID="UserName" />                
+            </div>
         </div>
+        <div style="margin-bottom:10px">
+            <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
+            <div>
+                <asp:TextBox runat="server" ID="Password" TextMode="Password" />                
+            </div>
+        </div>
+        <div style="margin-bottom:10px">
+            <asp:Label runat="server" AssociatedControlID="ConfirmPassword">Confirm password</asp:Label>
+            <div>
+                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" />                
+            </div>
+        </div>
+        <div>
+            <div>
+                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" />
+            </div>
+        </div>
+    </div>
     </form>
 </body>
 </html>
