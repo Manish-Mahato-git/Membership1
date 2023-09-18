@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using System;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Membership1
@@ -12,18 +11,47 @@ namespace Membership1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-        protected void loginUser_Authenticate(object sender, AuthenticateEventArgs e)
-        {
-            bool isLogin = Membership.ValidateUser(loginUser.UserName, loginUser.Password);
-            if (isLogin)
+            if (!IsPostBack)
             {
-                loginUser.Visible = true;
-                Session["user"] = User.Identity.Name;
-                FormsAuthentication.RedirectFromLoginPage(loginUser.UserName, true);
-                Response.Redirect("Default.aspx");
+                if (User.Identity.IsAuthenticated)
+                {
+                    StatusText.Text = string.Format("Hello {0}!!", User.Identity.GetUserName());
+                    LoginStatus.Visible = true;
+                    LogoutButton.Visible = true;
+                }
+                else
+                {
+                    LoginForm.Visible = true;
+                }
             }
+        }
+
+        protected void SignIn(object sender, EventArgs e)
+        {
+            var userStore = new UserStore<IdentityUser>();
+            var userManager = new UserManager<IdentityUser>(userStore);
+            var user = userManager.Find(UserName.Text, Password.Text);
+
+            if (user != null)
+            {
+                //var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, userIdentity);
+                Response.Redirect("~/Login.aspx");
+            }
+            else
+            {
+                StatusText.Text = "Invalid username or password.";
+                LoginStatus.Visible = true;
+            }
+        }
+
+        protected void SignOut(object sender, EventArgs e)
+        {
+            //var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            //authenticationManager.SignOut();
+            Response.Redirect("~/Login.aspx");
         }
     }
 }
