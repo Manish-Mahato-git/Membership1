@@ -10,6 +10,7 @@
     <form id="form1" runat="server">
         <div>
             <asp:DetailsView ID="DetailsView1" runat="server" Height="50px" Width="125px"></asp:DetailsView>
+            <asp:Label runat="server" AssociatedControlID="UserName">User Login Success</asp:Label>
         </div>
     </form>
 </body>
