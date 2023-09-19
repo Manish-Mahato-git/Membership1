@@ -14,6 +14,8 @@ namespace Membership1
             var manager = new UserManager<IdentityUser>(userStore);
 
             var user = new IdentityUser() { UserName = UserName.Text };
+            user.LockoutEndDateUtc = DateTime.UtcNow;
+            
             IdentityResult result = manager.Create(user, Password.Text);
 
             if (result.Succeeded)
