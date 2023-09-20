@@ -85,7 +85,7 @@ namespace Membership1
                                 if (user != null)
                                 {
                                     // Update user data
-                                    user.PasswordHash = Password.Text;
+                                    //user.PasswordHash = Password.Text;
                                     var result = userManager.Update(user);
 
                                     if (result.Succeeded)
