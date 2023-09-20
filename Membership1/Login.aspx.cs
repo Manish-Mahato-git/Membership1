@@ -17,13 +17,13 @@ namespace Membership1
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    Label1.Text = string.Format("Hello {0}!!", User.Identity.GetUserName());
+                    //Label1.Text = string.Format("Hello {0}!!", User.Identity.GetUserName());
                     //LoginStatus.Visible = true;
                     //LogoutButton.Visible = true;
                 }
                 else
                 {
-                    Label1.Visible = true;
+                    //Label1.Visible = true;
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace Membership1
                             else
                             {
                                 // Invalid login
-                                Label1.Text = "Invalid username or password.";
+                                //Label1.Text = "Invalid username or password.";
                             }
                         }
                         else
@@ -103,7 +103,7 @@ namespace Membership1
                             }
                             else
                             {
-                                Label1.Text = "Invalid username or password.";
+                                //Label1.Text = "Invalid username or password.";
                                 //loginUser.LoginStatus.Visible = true;
                             }
                         }
