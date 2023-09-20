@@ -17,13 +17,13 @@ namespace Membership1
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    StatusText.Text = string.Format("Hello {0}!!", User.Identity.GetUserName());
-                    LoginStatus.Visible = true;
-                    LogoutButton.Visible = true;
+                    //Label1.Text = string.Format("Hello {0}!!", User.Identity.GetUserName());
+                    //LoginStatus.Visible = true;
+                    //LogoutButton.Visible = true;
                 }
                 else
                 {
-                    LoginForm.Visible = true;
+                    //Label1.Visible = true;
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace Membership1
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT * FROM AspNetUsers where UserName='"+UserName.Text.Trim()+"'", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM AspNetUsers where UserName='" + loginUser.UserName + "'", connection))
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -48,13 +48,13 @@ namespace Membership1
                         if (identityHash == null || identityHash == "")
                         {
                             //login with membership and update the value of password hash in identity
-                            if (Membership.ValidateUser(UserName.Text, Password.Text))
+                            if (Membership.ValidateUser(loginUser.UserName, loginUser.Password))
                             {
 
                                 var userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
 
-                                var user = userManager.FindByName(UserName.Text);
-                                user.PasswordHash = userManager.PasswordHasher.HashPassword(Password.Text);
+                                var user = userManager.FindByName(loginUser.UserName);
+                                user.PasswordHash = userManager.PasswordHasher.HashPassword(loginUser.Password);
                                 if (user != null)
                                 {
                                     // Update user data
@@ -83,7 +83,7 @@ namespace Membership1
                             else
                             {
                                 // Invalid login
-                                StatusText.Text = "Invalid username or password.";
+                                //Label1.Text = "Invalid username or password.";
                             }
                         }
                         else
@@ -91,20 +91,20 @@ namespace Membership1
                             //login with identity
                             var userStore = new UserStore<IdentityUser>();
                             var userManager = new UserManager<IdentityUser>(userStore);
-                            var user = userManager.Find(UserName.Text, Password.Text);
-                            
+                            var user = userManager.Find(loginUser.UserName, loginUser.Password);
+
                             if (user != null)
                             {
                                 //var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
                                 var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                            
+
                                 //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, userIdentity);
                                 Response.Redirect("~/Default.aspx");
                             }
                             else
                             {
-                                StatusText.Text = "Invalid username or password.";
-                                LoginStatus.Visible = true;
+                                //Label1.Text = "Invalid username or password.";
+                                //loginUser.LoginStatus.Visible = true;
                             }
                         }
 
@@ -113,7 +113,7 @@ namespace Membership1
             }
 
 
-            
+
         }
 
         protected void SignOut(object sender, EventArgs e)
