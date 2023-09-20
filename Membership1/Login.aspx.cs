@@ -81,7 +81,7 @@ namespace Membership1
                                 var userManager = new UserManager<User>(new UserStore<User>(new ApplicationDbContext()));
 
                                 var user = userManager.FindByName(UserName.Text);
-                                user.PasswordHash = Password.Text;
+                                user.PasswordHash = userManager.PasswordHasher.HashPassword(Password.Text);
                                 if (user != null)
                                 {
                                     // Update user data
