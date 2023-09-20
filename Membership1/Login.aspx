@@ -13,7 +13,7 @@
             CreateUserUrl="~/Register.aspx"
             onauthenticate="loginUser_Authenticate" BackColor="#F7F7DE"
             BorderColor="#CCCC99" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="10pt" Height="135px" Width="286px">
+            Font-Names="Verdana" Font-Size="10pt" Height="409px" Width="539px">
             <TitleTextStyle BackColor="#6B696B" Font-Bold="True" ForeColor="#FFFFFF" />
             </asp:Login>
 
